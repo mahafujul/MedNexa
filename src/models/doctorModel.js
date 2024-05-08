@@ -90,6 +90,11 @@ const doctorSchema = new mongoose.Schema(
     allAppointments:{
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'appointments'}]
     },
+    sumOfRatings:{
+      type: Number,
+      default: 0,
+      required: true
+    },
     feedbacks: {
       type: [{type: mongoose.Schema.Types.ObjectId, ref: 'feedbacks'}],
     },
