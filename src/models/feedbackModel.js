@@ -24,6 +24,10 @@ const feedbackSchema = mongoose.model({
         ref: 'users',
         required: true,
     },
+    rating: {
+        type: Number,
+        required: true
+    }
 })
 
 export const Feedback = mongoose.models.Feedback || mongoose.model('feedbacks', feedbackSchema)
