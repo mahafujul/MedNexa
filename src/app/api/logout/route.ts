@@ -5,7 +5,7 @@
  */
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function POST() {
     try {
         // Create a JSON response indicating successful logout
         const response = NextResponse.json({
