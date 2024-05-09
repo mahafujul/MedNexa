@@ -9,13 +9,13 @@ import { connect } from '@/config/dbConfig'; // Import database connection funct
 connect();
 
 // Endpoint for user creation
-export default async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
     try {
         // Parse request body
         const reqBody = await request.json();
         
         // Destructure request body to extract data
-        const { username, password, firstName, lastName, email } = reqBody;
+        const { username, password, firstName, lastName, email, mobileNumber } = reqBody;
         
         // Check if a user with the given username already exists
         const userExists = await User.findOne({ username });
@@ -29,7 +29,7 @@ export default async function POST(request: NextRequest) {
         const hashedPassword = await bcrypt.hash(password, salt);
         
         // Create a new User instance with the provided data
-        const newUser = new User({ username, password: hashedPassword, firstName, lastName, email });
+        const newUser = new User({ username, password: hashedPassword, firstName, lastName, email, mobileNumber });
         
         // Save the new user to the database
         await newUser.save();
