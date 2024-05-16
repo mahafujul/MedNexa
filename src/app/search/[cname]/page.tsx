@@ -140,7 +140,7 @@ const doctorList = [
   ]
   return (
     <div className='mt-5'>
-        <DoctorList heading={params.cname}
+        <DoctorList heading={params.cname.replace(/%20/g," ")}
         doctorList={doctorList}
         />
     </div>
