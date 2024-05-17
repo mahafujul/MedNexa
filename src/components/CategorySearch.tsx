@@ -27,11 +27,15 @@ function CategorySearch() {
         },
         {
             Name: "Cardiologist",
-            url: "/pngegg.png",
+            url: "/cardiologist.png",
         },
         {
             Name: "Gynecologist",
-            url: "/pngegg.png",
+            url: "/gynecologist.png",
+        },
+        {
+            Name: "Pediatrician",
+            url: "/pediatrician.png",
         },
         {
             Name: "Hepatologist",
@@ -51,31 +55,27 @@ function CategorySearch() {
         },
         {
             Name: "Internal Medicine",
-            url: "/pngegg.png",
-        },
-        {
-            Name: "Pediatrician",
-            url: "/pngegg.png",
+            url: "/internal_medicine.png",
         },
         {
             Name: "Common Cold",
-            url: "/pngegg.png",
+            url: "/common_cold.png",
         },
         {
             Name: "Phlebologist",
-            url: "/pngegg.png",
+            url: "/phlebologist.png",
         },
         {
-            Name: "Osteoarthristis",
-            url: "/pngegg.png",
+            Name: "Osteoarthritis",
+            url: "/osteoarthritis.png",
         },
         {
             Name: "Rheumatologists",
-            url: "/pngegg.png",
+            url: "/rheumatologists.png",
         },
         {
             Name: "Otolaryngologist",
-            url: "/pngegg.png",
+            url: "/otolaryngologist.png",
         },
     ]
     return (

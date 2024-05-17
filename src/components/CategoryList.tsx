@@ -1,16 +1,15 @@
 "use client";
 
 import React from "react";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 function CategoryList() {
-  const params = usePathname();
-  const category = params.split("/")[2];
+    const params = usePathname();
+    const category = params.split("/")[2];
 
-  const categoryList = [
+    const categoryList = [
         {
             Name: "Dermatologist",
             url: "/skin.png",
@@ -22,6 +21,22 @@ function CategoryList() {
         {
             Name: "Gastroenterologist",
             url: "/Gastroenterologist.png",
+        },
+        {
+            Name: "Neurologist",
+            url: "/neurologist.png",
+        },
+        {
+            Name: "Cardiologist",
+            url: "/cardiologist.png",
+        },
+        {
+            Name: "Gynecologist",
+            url: "/gynecologist.png",
+        },
+        {
+            Name: "Pediatrician",
+            url: "/pediatrician.png",
         },
         {
             Name: "Hepatologist",
@@ -40,44 +55,28 @@ function CategoryList() {
             url: "/pulmonologist.png",
         },
         {
-            Name: "Neurologist",
-            url: "/neurologist.png",
-        },
-        {
             Name: "Internal Medicine",
-            url: "/pngegg.png",
-        },
-        {
-            Name: "Pediatrician",
-            url: "/pngegg.png",
+            url: "/internal_medicine.png",
         },
         {
             Name: "Common Cold",
-            url: "/pngegg.png",
-        },
-        {
-            Name: "Cardiologist",
-            url: "/pngegg.png",
+            url: "/common_cold.png",
         },
         {
             Name: "Phlebologist",
-            url: "/pngegg.png",
+            url: "/phlebologist.png",
         },
         {
-            Name: "Osteoarthristis",
-            url: "/pngegg.png",
+            Name: "Osteoarthritis",
+            url: "/osteoarthritis.png",
         },
         {
             Name: "Rheumatologists",
-            url: "/pngegg.png",
+            url: "/rheumatologists.png",
         },
         {
             Name: "Otolaryngologist",
-            url: "/pngegg.png",
-        },
-        {
-            Name: "Gynecologist",
-            url: "/pngegg.png",
+            url: "/otolaryngologist.png",
         },
     ]
 
