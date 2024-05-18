@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner"
 import { CookiesProvider } from 'next-client-cookies/server';
-
+import AuthProvider from '@/context/AuthProvider'
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,14 +21,16 @@ export default function RootLayout({
   return (
     <CookiesProvider>
       <html lang="en">
-        <body className={inter.className}>
-          <div className="md:px-20">
-            <Header></Header>
-            {children}
-          </div>
-          <Footer/>
-          <Toaster />
-        </body>
+        <AuthProvider>
+          <body className={inter.className}>
+            <div className="md:px-20">
+              <Header></Header>
+              {children}
+            </div>
+            <Footer/>
+            <Toaster />
+          </body>
+        </AuthProvider>
       </html>
     </CookiesProvider>
   );
