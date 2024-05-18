@@ -8,14 +8,14 @@ import { connect } from '@/config/dbConfig'; // Import database connection funct
 connect();
 
 // Endpoint for doctor creation
-export default async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
     try {
         // Parse request body
         const reqBody = await request.json();
         
         // Destructure request body to extract data
         const { 
-            username, password, firstName, lastName, email, about, specialization, 
+            username, password, firstName, lastName, url, email, about, specialization, 
             phoneNumber, address, city, experience, feePerCunsultation, 
             facebook, linkedin, twitter, youtube 
         } = reqBody;
@@ -32,7 +32,7 @@ export default async function POST(request: NextRequest) {
         
         // Create a new Doctor instance with the provided data
         const newUser = new Doctor({
-            username, password: hashedPassword, firstName, lastName, email, 
+            username, password: hashedPassword, firstName, lastName, email, url,
             about, specialization, phoneNumber, address, city, experience, 
             feePerCunsultation, facebook, linkedin, twitter, youtube
         });
@@ -44,6 +44,6 @@ export default async function POST(request: NextRequest) {
         return NextResponse.json({ message: "Doctor created successfully", success: true }, { status: 200 });
     } catch (err: any) {
         // Return a JSON response for internal server error with a status code (500)
-        return NextResponse.json({ message: 'Internal Server Error', success: false }, { status: 500 });
+        return NextResponse.json({ message: 'Internal Server Error', success: false, err: err.message }, { status: 500 });
     }
 }
