@@ -6,7 +6,7 @@ import {connect} from '@/config/dbConfig'
 
 //Connet to the database
 connect();
-export default async function POST(request: NextRequest){
+export async function POST(request: NextRequest){
     try{
         // Retrieve data from the request body
         const reqBody = await request.json();
