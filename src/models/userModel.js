@@ -26,13 +26,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    isDoctor: {
-      type: Boolean,
-      default: false,
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false,
+    role: {
+      type: String,
+      default: "USER"
     },
     allAppointments:{
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'appointments'}]
