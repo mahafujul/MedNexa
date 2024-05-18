@@ -3,30 +3,30 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import axios from 'axios';
-import { useCookies } from 'next-client-cookies';
 import { toast } from "sonner"
-import Router from 'next/router'
+import { useSession, signOut } from "next-auth/react"
+import { LayoutDashboard } from 'lucide-react'
 
 function Header() {
-    const cookies = useCookies();
-    const cookie = cookies.get('token');
-
+    const { data: session } = useSession()
+   
+    // Function to handle sign out
     async function onClickSignOut(){
         try{
-            const response = await axios.post('/api/logout');
-            toast(response.data.message, {
+            signOut()
+            // Show toast notification on successful logout
+            toast("Logout successful", {
                 action: {
                   label: "Undo",
                   onClick: () => console.log("Undo"),
                 },
             })
-            Router.reload();
         }catch(err){
             console.log(err);
         }
     }
 
+    // Menu items for navigation
     const Menu = [
         {
             id: 1,
@@ -44,13 +44,15 @@ function Header() {
             path: '/contact-us'
         }
     ]
-    if(!cookie){
+
+    // Render header for authenticated users
+    if(session){
         return (
             <div className='flex items-center justify-between p-4 shadow-sm'>
                 <div className='flex items-center gap-10'>
                     <Image src="/logo.svg" alt='logo'
                         width={180} height={80}
-                        />
+                    />
                     <ul className='md:flex gap-8 hidden'>
                         {Menu.map((item, index)=>(
                             <Link key={index} href={item.path}>
@@ -59,19 +61,28 @@ function Header() {
                         ))}
                     </ul>
                 </div>
-                <Button asChild>
-                    <Link href="/login_signup">Get Started</Link>
-                </Button>
+                <div className='flex gap-3'>
+                    <Button asChild>
+                        <h2 className='text-md flex gap-2 text-gray-500'>
+                            <LayoutDashboard />
+                            <Link href="/dashboard">Dashboard</Link>
+                        </h2>
+                    </Button>
+                    <Button asChild>
+                        <Link href="#" onClick={() => onClickSignOut()}>Sign out</Link>
+                    </Button>
+                </div>
             </div>
         )
     }
-
+    
+    // Render header for unauthenticated users
     return (
         <div className='flex items-center justify-between p-4 shadow-sm'>
             <div className='flex items-center gap-10'>
                 <Image src="/logo.svg" alt='logo'
                     width={180} height={80}
-                    />
+                />
                 <ul className='md:flex gap-8 hidden'>
                     {Menu.map((item, index)=>(
                         <Link key={index} href={item.path}>
@@ -81,7 +92,7 @@ function Header() {
                 </ul>
             </div>
             <Button asChild>
-                <Link href="/">Sign out</Link>
+                <Link href="/login_signup">Get Started</Link>
             </Button>
         </div>
     )
