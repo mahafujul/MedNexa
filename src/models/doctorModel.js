@@ -19,6 +19,10 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    email: {
+      type: String,
+      required: true
+    },
     degrees: [{type: String}],
     password: {
       type: String,
@@ -34,23 +38,18 @@ const doctorSchema = new mongoose.Schema(
     },
     website: {
       type: String,
-      required: true,
     },
     facebook: {
       type: String,
-      required: true,
     },
     linkedin: {
       type: String,
-      required: true,
     },
     twitter: {
       type: String,
-      required: true,
     },
     youtube: {
       type: String,
-      required: true,
     },
     address: {
       type: String,
@@ -87,6 +86,10 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       default: "pending",
     },
+    role: {
+      type: String,
+      default: "DOCTOR"
+    },
     allAppointments:{
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'appointments'}]
     },
@@ -108,4 +111,4 @@ const doctorSchema = new mongoose.Schema(
   }
 );
 
-export const Doctor = mongoose.models.Doctor || mongoose.model("doctors", doctorSchema);
+export const Doctor = mongoose.models.Doctor || mongoose.model("Doctor", doctorSchema);
