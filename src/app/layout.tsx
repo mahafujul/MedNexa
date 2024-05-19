@@ -4,7 +4,6 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner"
-import { CookiesProvider } from 'next-client-cookies/server';
 import AuthProvider from '@/context/AuthProvider'
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,19 +18,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <CookiesProvider>
-      <html lang="en">
-        <AuthProvider>
-          <body className={inter.className}>
-            <div className="md:px-20">
-              <Header></Header>
-              {children}
-            </div>
-            <Footer/>
-            <Toaster />
-          </body>
-        </AuthProvider>
-      </html>
-    </CookiesProvider>
+    <html lang="en">
+      <AuthProvider>
+        <body className={inter.className}>
+          <div className="md:px-20">
+            <Header></Header>
+            {children}
+          </div>
+          <Footer/>
+          <Toaster />
+        </body>
+      </AuthProvider>
+    </html>
   );
 }
