@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl;
 
     // If token exists and user is trying to access login/signup or dashboard, redirect them to their specific dashboard
-    if (token && (url.pathname.startsWith('/login_signup') || url.pathname === `/dashboard`)) {
+    if (token && (url.pathname.startsWith('/login_signup') || url.pathname.startsWith('/dashboard'))) {
         // If user is already on their role-based dashboard, do not redirect
         if (url.pathname !== `/dashboard/${role}`) {
             return NextResponse.redirect(new URL(`/dashboard/${role}`, request.url));
