@@ -2,6 +2,8 @@ import Image from "next/image";
 import Hero from "@/components/Hero";
 import CategorySearch from "@/components/CategorySearch";
 import DoctorList from "@/components/DoctorList";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const doctorList = [
   {
@@ -128,12 +130,18 @@ const doctorList = [
 export default function Home() {
   return (
     <div>
-      {/* Hero Section */}
-      <Hero></Hero>
-      {/* Search Bar + Category */}
-      <CategorySearch/>
-      {/* Popular Doctor List  */}
-      <DoctorList doctorList={doctorList}/>
+      <div className="md:px-20">
+        {/* Header */}
+        <Header></Header>
+        {/* Hero Section */}
+        <Hero></Hero>
+        {/* Search Bar + Category */}
+        <CategorySearch/>
+        {/* Popular Doctor List  */}
+        <DoctorList doctorList={doctorList}/>
+      </div>
+      {/* Footer */}
+      <Footer/>
     </div>
   );
 }
