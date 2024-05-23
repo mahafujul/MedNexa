@@ -73,7 +73,7 @@ function BookAppointment({ doctor }: any) {
                                 <Calendar
                                     mode="single"
                                     selected={date}
-                                    onSelect={setDate}
+                                    onSelect={(day)=> day && setDate(day)}
                                     disabled={isPastDay}
                                     className="rounded-md border"
                                 />
