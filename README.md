@@ -1,4 +1,4 @@
-# Doctor Recommendation and Appointment Booking System
+# Specialist Doctor Recommendation and Appointment Booking System
 
 This is a specialized doctor recommendation and appointment booking system built using Next.js. It helps users to input their symptoms, predict potential diseases, and book appointments with recommended doctors.
 
