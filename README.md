@@ -18,7 +18,7 @@ This is a specialized doctor recommendation and appointment booking system built
 - **Doctor Registration/Login:** Allow doctors to register and log in securely.
 - **Appointment Management:** Display upcoming appointments and manage them efficiently.
 - **Patient Information:** Access patient profiles and medical history for appointments.
-- **Prescription Management:** Write and manage prescriptions for patients.
+
 
 
 ### For Admins:
