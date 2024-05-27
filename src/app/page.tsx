@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Hero from "@/components/Hero";
-import CategorySearch from "@/components/CategorySearch";
-import DoctorList from "@/components/DoctorList";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Hero from "@/components/hero";
+import CategorySearch from "@/components/category-search";
+import DoctorList from "@/components/doctor-list";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 const doctorList = [
   {

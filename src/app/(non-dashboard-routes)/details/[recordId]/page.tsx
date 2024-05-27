@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
-import DoctorDetail from '@/components/DoctorDetail';
-import DoctorSuggestionList from '@/components/DoctorSuggestionList';
+import DoctorDetail from '@/components/doctor-detail';
+import DoctorSuggestionList from '@/components/doctor-suggestion-list';
 function Details({params}: any) {
 
     const doctor = {

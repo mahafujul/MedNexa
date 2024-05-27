@@ -1,5 +1,5 @@
 "use client"
-import DoctorList from '@/components/DoctorList';
+import DoctorList from '@/components/doctor-list';
 // import GlobalApi from '@/app/_utils/GlobalApi'
 import React, { useEffect, useState } from 'react'
 
