@@ -67,7 +67,7 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    feePerCunsultation: {
+    feePerConsultation: {
       type: Number,
       required: true,
     },
@@ -101,8 +101,6 @@ const doctorSchema = new mongoose.Schema(
     feedbacks: {
       type: [{type: mongoose.Schema.Types.ObjectId, ref: 'feedbacks'}],
     },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
   },
