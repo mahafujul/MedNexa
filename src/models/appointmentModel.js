@@ -33,7 +33,7 @@ const appointmentSchema = new mongoose.Schema(
       default: false
     },
     feedback: {
-      type: {type: mongoose.Schema.Types.ObjectId},
+      type: mongoose.Schema.Types.ObjectId, 
       ref: 'feedbacks'
     }
   },
@@ -42,4 +42,4 @@ const appointmentSchema = new mongoose.Schema(
   }
 );
 
-export const Appointment = mongoose.models.Appointment || mongoose.model("appointments", appointmentSchema);
+export const Appointment = mongoose.models.Appointment || mongoose.model("Appointment", appointmentSchema);
