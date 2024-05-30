@@ -44,8 +44,6 @@ const userSchema = new mongoose.Schema(
     feedbacks: {
       type: [{type: mongoose.Schema.Types.ObjectId, ref: 'feedbacks'}],
     },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
   },
