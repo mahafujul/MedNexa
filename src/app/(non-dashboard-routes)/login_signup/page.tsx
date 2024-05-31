@@ -94,7 +94,7 @@ function LoginSign({}: Props) {
     }
 
     return (
-        <div className='w-100 h-screen flex justify-center items-center'>
+        <div className='w-100 h-screen flex justify-center items-center p-4'>
             {/* Tabs for switching between Login and Register */}
             <Tabs defaultValue="login" className="w-[400px]">
                 {/* TabsList for displaying tab labels */}
