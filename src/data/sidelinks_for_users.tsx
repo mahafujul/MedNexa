@@ -26,7 +26,7 @@ export const sidelinks: SideLink[] = [
   {
     title: 'Find Specialist',
     label: '',
-    href: '/dashboard/user/enter-symptoms',
+    href: '/dashboard/user/find-specialist',
     icon: <IconUsers size={18} />,
   },
   {
