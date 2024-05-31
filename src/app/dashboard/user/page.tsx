@@ -38,7 +38,7 @@ export default function User() {
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
-      <LayoutHeader className='shadow py-3.5'>
+      <LayoutHeader className='py-3.5'>
         <h1 className='text-2xl font-bold tracking-tight md:text-3xl'>
           Dashboard
         </h1>
