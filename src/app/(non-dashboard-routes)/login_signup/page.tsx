@@ -25,8 +25,8 @@ import { signIn } from 'next-auth/react';
 // Define the type of props passed to the component
 type Props = {}
 
-// Define the LoginSign functional component
-function LoginSign({}: Props) { 
+// Define the LoginSignup functional component
+function LoginSignup({}: Props) { 
     // Define state variables using useState hook
     const [user, setUser] = useState({}); // State for user registration data
     const [loginCredential, setLoginCredential] = useState<{username: string, password: string}>({username: "", password: ""}); // State for login credentials
@@ -173,5 +173,5 @@ function LoginSign({}: Props) {
     );
 }
 
-// Export the LoginSign component
-export default LoginSign; 
+// Export the LoginSignup component
+export default LoginSignup; 
