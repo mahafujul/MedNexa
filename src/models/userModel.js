@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
@@ -10,17 +10,17 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    firstName:{
+    firstName: {
       type: String,
-      required: true
-    }, 
+      required: true,
+    },
     lastName: {
       type: String,
-      required: true
+      required: true,
     },
-    mobileNumber:{
+    mobileNumber: {
       type: String,
-      required: true
+      required: true,
     },
     password: {
       type: String,
@@ -28,10 +28,10 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: "USER"
+      default: "USER",
     },
-    allAppointments:{
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'appointments'}]
+    allAppointments: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "appointments" }],
     },
     seenNotifications: {
       type: Array,
@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
       default: [],
     },
     feedbacks: {
-      type: [{type: mongoose.Schema.Types.ObjectId, ref: 'feedbacks'}],
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "feedbacks" }],
     },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,

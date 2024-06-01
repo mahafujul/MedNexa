@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -11,17 +11,17 @@ export const getUserAppointmentsAggregation = (userId) => {
   return [
     // Match the user by userId
     { $match: { _id: new ObjectId(userId) } },
-    
+
     // Lookup appointments
     {
       $lookup: {
-        from: 'appointments',
-        localField: 'allAppointments',
-        foreignField: '_id',
-        as: 'allAppointments'
-      }
+        from: "appointments",
+        localField: "allAppointments",
+        foreignField: "_id",
+        as: "allAppointments",
+      },
     },
-    
+
     // Project fields and categorize appointments
     {
       $project: {
@@ -41,25 +41,24 @@ export const getUserAppointmentsAggregation = (userId) => {
         allAppointments: 1,
         todaySessions: {
           $filter: {
-            input: '$allAppointments',
-            as: 'appointment',
+            input: "$allAppointments",
+            as: "appointment",
             cond: {
               $and: [
-                { $gte: ['$$appointment.date', today] },
-                { $lt: ['$$appointment.date', tomorrow] }
-              ]
-            }
-          }
+                { $gte: ["$$appointment.date", today] },
+                { $lt: ["$$appointment.date", tomorrow] },
+              ],
+            },
+          },
         },
         upcomingSessions: {
           $filter: {
-            input: '$allAppointments',
-            as: 'appointment',
-            cond: { $gte: ['$$appointment.date', tomorrow] }
-          }
-        }
-      }
-    }
+            input: "$allAppointments",
+            as: "appointment",
+            cond: { $gte: ["$$appointment.date", tomorrow] },
+          },
+        },
+      },
+    },
   ];
 };
-

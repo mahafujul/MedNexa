@@ -1,15 +1,15 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const appointmentSchema = new mongoose.Schema(
   {
     doctorInfo: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'doctors',
+      ref: "doctors",
       required: true,
     },
     userInfo: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'users',
+      ref: "users",
       required: true,
     },
     date: {
@@ -30,16 +30,18 @@ const appointmentSchema = new mongoose.Schema(
     },
     completed: {
       type: Boolean,
-      default: false
+      default: false,
     },
     feedback: {
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'feedbacks'
-    }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "feedbacks",
+    },
   },
   {
     timestamps: true,
   }
 );
 
-export const Appointment = mongoose.models.Appointment || mongoose.model("Appointment", appointmentSchema);
+export const Appointment =
+  mongoose.models.Appointment ||
+  mongoose.model("Appointment", appointmentSchema);

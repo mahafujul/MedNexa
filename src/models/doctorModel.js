@@ -1,5 +1,4 @@
-import mongoose from 'mongoose'
-
+import mongoose from "mongoose";
 
 const doctorSchema = new mongoose.Schema(
   {
@@ -15,22 +14,22 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    about:{
+    about: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
       type: String,
-      required: true
+      required: true,
     },
-    degrees: [{type: String}],
+    degrees: [{ type: String }],
     password: {
       type: String,
-      required: true
+      required: true,
     },
     url: {
       type: String,
-      required: true
+      required: true,
     },
     phoneNumber: {
       type: String,
@@ -55,9 +54,9 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    city:  {
+    city: {
       type: String,
-      required: true
+      required: true,
     },
     specialization: {
       type: String,
@@ -71,15 +70,15 @@ const doctorSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    timings : {
+    timings: {
       type: Array,
       required: true,
     },
-    popular:{
+    popular: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    numberOfFeedback:{
+    numberOfFeedback: {
       type: Number,
     },
     status: {
@@ -88,18 +87,18 @@ const doctorSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: "DOCTOR"
+      default: "DOCTOR",
     },
-    allAppointments:{
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'appointments'}]
+    allAppointments: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "appointments" }],
     },
-    sumOfRatings:{
+    sumOfRatings: {
       type: Number,
       default: 0,
-      required: true
+      required: true,
     },
     feedbacks: {
-      type: [{type: mongoose.Schema.Types.ObjectId, ref: 'feedbacks'}],
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "feedbacks" }],
     },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
@@ -109,4 +108,5 @@ const doctorSchema = new mongoose.Schema(
   }
 );
 
-export const Doctor = mongoose.models.Doctor || mongoose.model("Doctor", doctorSchema);
+export const Doctor =
+  mongoose.models.Doctor || mongoose.model("Doctor", doctorSchema);
