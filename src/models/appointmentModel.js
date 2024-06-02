@@ -4,12 +4,12 @@ const appointmentSchema = new mongoose.Schema(
   {
     doctorInfo: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "doctors",
+      ref: "Doctor",
       required: true,
     },
     userInfo: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
+      ref: "User",
       required: true,
     },
     date: {
@@ -34,7 +34,7 @@ const appointmentSchema = new mongoose.Schema(
     },
     feedback: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "feedbacks",
+      ref: "Feedback",
     },
   },
   {
