@@ -38,7 +38,7 @@ export const sidelinks: SideLink[] = [
   {
     title: "Settings",
     label: "",
-    href: "/settings",
+    href: "/dashboard/user/settings/profile",
     icon: <IconSettings size={18} />,
   },
 ];
