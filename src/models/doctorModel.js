@@ -90,7 +90,7 @@ const doctorSchema = new mongoose.Schema(
       default: "DOCTOR",
     },
     allAppointments: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "appointments" }],
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Appointment" }],
     },
     sumOfRatings: {
       type: Number,
@@ -98,7 +98,7 @@ const doctorSchema = new mongoose.Schema(
       required: true,
     },
     feedbacks: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "feedbacks" }],
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Feedback" }],
     },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
