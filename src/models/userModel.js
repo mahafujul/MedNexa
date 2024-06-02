@@ -18,6 +18,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    dateOfBirth:{
+      type: Date
+    },
     mobileNumber: {
       type: String,
       required: true,
@@ -31,7 +34,7 @@ const userSchema = new mongoose.Schema(
       default: "USER",
     },
     allAppointments: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "appointments" }],
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Appointment" }],
     },
     seenNotifications: {
       type: Array,
@@ -42,7 +45,7 @@ const userSchema = new mongoose.Schema(
       default: [],
     },
     feedbacks: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "feedbacks" }],
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Feedback" }],
     },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
