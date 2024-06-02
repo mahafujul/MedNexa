@@ -15,12 +15,12 @@ const feedbackSchema = mongoose.model({
   },
   doctorInfo: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "doctors",
+    ref: "Doctor",
     required: true,
   },
   userInfo: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "users",
+    ref: "User",
     required: true,
   },
   rating: {
