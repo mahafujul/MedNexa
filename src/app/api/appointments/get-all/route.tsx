@@ -1,32 +1,73 @@
+import mongoose from "mongoose";
 import { connect } from "@/config/dbConfig";
-import { User } from "@/models/userModel"; // Import the User model
-import { Appointment } from "@/models/appointmentModel"; // Import the Appointment model
-import { authOptions } from "@/app/api/auth/[...nextauth]/options"; // Import NextAuth options
-import { getServerSession } from "next-auth/next"; // Import the getServerSession function from NextAuth
+import { User } from "@/models/userModel";
+import { Appointment } from "@/models/appointmentModel";
+import { Doctor } from "@/models/doctorModel";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 
-//Connect to the database
+// Connect to the database
 connect();
 
-//Endpoint to get all the appointments of a specific user
+// Endpoint to get all the appointments of a specific user
 export async function GET() {
   try {
     // Retrieve the session information
     const session = await getServerSession(authOptions);
     const userId = session?.user?.userId;
 
-    // Find the user with the userId that we retrieved from the session
-    const user = await User.findOne({ _id: userId }).populate({
-      path: "allAppointments",
-      populate: {
-        path: "doctorInfo",
+    if (!userId) {
+      return NextResponse.json(
+        { message: "No user ID found in session", success: false },
+        { status: 400 }
+      );
+    }
+
+    // Aggregation pipeline
+    const appointments = await User.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(userId) } },
+      { $unwind: "$allAppointments" },
+      {
+        $lookup: {
+          from: "appointments",
+          localField: "allAppointments",
+          foreignField: "_id",
+          as: "appointmentDetails",
+        },
       },
-    });
+      { $unwind: "$appointmentDetails" },
+      {
+        $lookup: {
+          from: "doctors",
+          localField: "appointmentDetails.doctorInfo",
+          foreignField: "_id",
+          as: "doctorDetails",
+        },
+      },
+      { $unwind: "$doctorDetails" },
+      {
+        $project: {
+          _id: "$appointmentDetails._id",
+          status: "$appointmentDetails.status",
+          completed: "$appointmentDetails.completed",
+          doctorName: {
+            $concat: [
+              "$doctorDetails.firstName",
+              " ",
+              "$doctorDetails.lastName",
+            ],
+          },
+          date: "$appointmentDetails.date",
+        },
+      },
+      { $sort: { date: 1 } }, // Sort appointments based on date in increasing order
+    ]);
 
     // Check if the user exists who is trying to create the appointment
-    if (!user) {
+    if (!appointments.length) {
       return NextResponse.json(
-        { message: "No user is found with the given userId", success: false },
+        { message: "No appointments found for the user", success: false },
         { status: 400 }
       );
     }
@@ -34,8 +75,8 @@ export async function GET() {
     // Respond with a success message
     return NextResponse.json(
       {
-        message: `Appointment successfully retrieved.`,
-        appointments: user?.allAppointments,
+        message: "Appointments successfully retrieved.",
+        appointments: appointments,
       },
       { status: 200 }
     );
