@@ -22,6 +22,43 @@ export const getUserAppointmentsAggregation = (userId) => {
       },
     },
 
+    // Unwind appointments to populate doctorInfo
+    { $unwind: { path: "$allAppointments", preserveNullAndEmptyArrays: true } },
+
+    // Lookup doctor info
+    {
+      $lookup: {
+        from: "doctors",
+        localField: "allAppointments.doctorInfo",
+        foreignField: "_id",
+        as: "allAppointments.doctorInfo",
+      },
+    },
+
+    // Add a single doctorInfo object back to each appointment
+    {
+      $addFields: {
+        "allAppointments.doctorInfo": {
+          $arrayElemAt: ["$allAppointments.doctorInfo", 0],
+        },
+      },
+    },
+
+    // Group back to reconstruct allAppointments array
+    {
+      $group: {
+        _id: "$_id",
+        username: { $first: "$username" },
+        email: { $first: "$email" },
+        firstName: { $first: "$firstName" },
+        lastName: { $first: "$lastName" },
+        mobileNumber: { $first: "$mobileNumber" },
+        role: { $first: "$role" },
+        feedbacks: { $first: "$feedbacks" },
+        allAppointments: { $push: "$allAppointments" },
+      },
+    },
+
     // Project fields and categorize appointments
     {
       $project: {
@@ -31,13 +68,7 @@ export const getUserAppointmentsAggregation = (userId) => {
         lastName: 1,
         mobileNumber: 1,
         role: 1,
-        seenNotifications: 1,
-        unseenNotifications: 1,
         feedbacks: 1,
-        createdAt: 1,
-        updatedAt: 1,
-        forgotPasswordToken: 1,
-        forgotPasswordTokenExpiry: 1,
         allAppointments: 1,
         todaySessions: {
           $filter: {
