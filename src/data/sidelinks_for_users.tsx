@@ -31,8 +31,8 @@ export const sidelinks: SideLink[] = [
   },
   {
     title: "My Bookings",
-    label: "3",
-    href: "/my-bookings",
+    label: "",
+    href: "/dashboard/user/my-bookings",
     icon: <IconChecklist size={18} />,
   },
   {
