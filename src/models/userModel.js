@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    dateOfBirth:{
+    dob:{
       type: Date
     },
     mobileNumber: {
