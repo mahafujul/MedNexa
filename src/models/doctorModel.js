@@ -22,7 +22,7 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    degrees: [{ type: String }],
+    degrees: [String],
     password: {
       type: String,
       required: true,
