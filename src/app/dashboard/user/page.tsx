@@ -71,7 +71,7 @@ export default function User() {
                   </p>
                   <Button
                     onClick={() =>
-                      router.push("/dashboard/user/enter-symptoms")
+                      router.push("/dashboard/user/find-specialist")
                     }
                   >
                     Find Specialist
