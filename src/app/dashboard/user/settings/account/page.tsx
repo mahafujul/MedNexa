@@ -24,8 +24,8 @@ export default function SettingsAccount() {
       <div>
         <h3 className="text-lg font-medium">Account</h3>
         <p className="text-sm text-muted-foreground">
-          Update your account settings. Set your First Name, Last Name and Date
-          of birth.
+          Manage your account details here. Update your personal information
+          including First Name, Last Name, and Date of Birth.
         </p>
       </div>
       <Separator />
