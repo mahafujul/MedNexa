@@ -14,10 +14,25 @@ export async function POST(request: NextRequest) {
         const reqBody = await request.json();
         
         // Destructure request body to extract data
-        const { 
-            username, password, firstName, lastName, url, email, about, specialization, 
-            phoneNumber, address, city, experience, feePerCunsultation, 
-            facebook, linkedin, twitter, youtube 
+        const {
+          username,
+          password,
+          firstName,
+          lastName,
+          url,
+          email,
+          about,
+          specialization,
+          phoneNumber,
+          address,
+          city,
+          experience,
+          feePerConsultation,
+          facebook,
+          linkedin,
+          twitter,
+          youtube,
+          degrees,
         } = reqBody;
         
         // Check if a user with the given username already exists
@@ -32,9 +47,24 @@ export async function POST(request: NextRequest) {
         
         // Create a new Doctor instance with the provided data
         const newUser = new Doctor({
-            username, password: hashedPassword, firstName, lastName, email, url,
-            about, specialization, phoneNumber, address, city, experience, 
-            feePerCunsultation, facebook, linkedin, twitter, youtube
+          username,
+          password: hashedPassword,
+          firstName,
+          lastName,
+          email,
+          url,
+          about,
+          specialization,
+          phoneNumber,
+          address,
+          city,
+          experience,
+          feePerConsultation,
+          facebook,
+          linkedin,
+          twitter,
+          youtube,
+          degrees,
         });
         
         // Save the new doctor to the database
