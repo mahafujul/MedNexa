@@ -61,11 +61,13 @@ function Header() {
             ))}
           </ul>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-1 md:gap-3">
           <Button asChild>
             <h2 className="text-md flex gap-2 text-gray-500">
               <LayoutDashboard />
-              <Link href="/dashboard">Dashboard</Link>
+              <Link className="hidden md:block" href="/dashboard">
+                Dashboard
+              </Link>
             </h2>
           </Button>
           <Button asChild>
