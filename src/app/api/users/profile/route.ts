@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
 }
 
 // Endpoint to update user details.
-export async function POST(request: NextRequest) {
+export async function PUT(request: NextRequest) {
   try {
     // Retrieve the userId from session
     const session = await getServerSession(authOptions);
