@@ -5,17 +5,19 @@ import { Layout, LayoutHeader } from "./custom/layout";
 import { Button } from "./custom/button";
 import Nav from "./nav";
 import { cn } from "@/lib/utils";
-import { sidelinks } from "@/data/sidelinks_for_users";
+import {SideLink} from '@/types'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   isCollapsed: boolean;
   setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
+  sidelinks: SideLink[];
 }
 
 export default function Sidebar({
   className,
   isCollapsed,
   setIsCollapsed,
+  sidelinks,
 }: SidebarProps) {
   const [navOpened, setNavOpened] = useState(false);
 
