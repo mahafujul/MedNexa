@@ -1,11 +1,9 @@
-// PUT /api/appointments/complete/:appointmentId
-
 // Import necessary modules and dependencies
 import { NextRequest, NextResponse } from "next/server"; // Next.js server-side request and response modules
 import { Appointment } from "@/models/appointmentModel"; // Import Appointment model
 
 // Define the PUT endpoint to mark an appointment as completed
-export default async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest) {
     try {
         // Retrieve the appointmentId from the request URL
         const pathname = request.nextUrl.pathname.split('/');
