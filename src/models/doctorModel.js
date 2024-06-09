@@ -70,9 +70,9 @@ const doctorSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    timings: {
-      type: Array,
-      required: true,
+    availableSlots: {
+      type: Map,
+      of: [String],
     },
     popular: {
       type: Boolean,
