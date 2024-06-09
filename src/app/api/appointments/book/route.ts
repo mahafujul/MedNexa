@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     // Check if the user exists who is trying to create the appointment
     if (!user) {
       return NextResponse.json(
-        { message: "No user is found with the given userId", success: false },
+        { message: "No user found with the given userId", success: false },
         { status: 400 }
       );
     }
@@ -39,12 +39,22 @@ export async function POST(request: NextRequest) {
     if (!doctor) {
       return NextResponse.json(
         {
-          message: "No doctor is found with the given doctorId.",
+          message: "No doctor found with the given doctorId",
           success: false,
         },
         { status: 400 }
       );
     }
+
+    // Check if the selected time slot is available
+    const availableSlots = doctor.availableSlots.get(date);
+    if (!availableSlots || !availableSlots.includes(selectedTimeSlot)) {
+      return NextResponse.json(
+        { message: "Selected time slot is not available", success: false },
+        { status: 400 }
+      );
+    }
+
     // Create the appointment
     const appointment = new Appointment({
       doctorInfo: doctorId,
@@ -63,16 +73,22 @@ export async function POST(request: NextRequest) {
     // Save the user after adding the _id of the appointment
     await user.save();
 
+    // Update doctor's available slots
+    doctor.availableSlots.set(
+      date,
+      availableSlots.filter((slot: any) => slot !== selectedTimeSlot)
+    );
+
     // add the newly created appointment to the 'allAppointments' array of the doctor
     doctor.allAppointments.push(appointment._id);
 
-    // Save the doctor after adding the _id of the appointment
+    // Save the doctor after adding the _id of the appointment and updating doctor's available slots
     await doctor.save();
 
     // Respond with a success message
     return NextResponse.json(
       {
-        message: `Appointment successfully created for doctor with ID ${doctorId} on ${date}`,
+        message: `Appointment booked successfully!`,
       },
       { status: 201 }
     );
