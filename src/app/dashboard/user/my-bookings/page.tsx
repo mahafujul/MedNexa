@@ -4,9 +4,7 @@ import React, { useState, useEffect } from "react";
 // Importing custom components
 import { Layout, LayoutBody, LayoutHeader } from "@/components/custom/layout";
 import { UserNav } from "@/components/user-nav";
-import {
-  ChevronDownIcon,
-} from "@radix-ui/react-icons";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   SortingState,
@@ -53,34 +51,41 @@ export type Appointment = {
 // Define table columns for appointments
 export const columns: ColumnDef<Appointment>[] = [
   {
-    accessorKey: "status",
+    accessorKey: "completed",
     header: "Status",
     cell: ({ row }) => (
       <div>
         <p
           className={`${
-            row.getValue("status") === "pending" ? "bg-red-200" : "bg-green-200"
+            row.getValue("completed") ? "bg-green-200" : "bg-red-200"
           } p-1 rounded-sm w-fit`}
         >
-          {row.getValue("status")}
+          {row.getValue("completed") ? "Completed" : "Pending"}
         </p>
       </div>
     ),
   },
   {
     accessorKey: "doctorName",
-    header: () => <div className="text-center">Doctor Name</div>,
+    header: () => <div>Doctor Name</div>,
     cell: ({ row }) => (
-      <div className="capitalize text-center">{row.getValue("doctorName")}</div>
+      <div className="capitalize">{row.getValue("doctorName")}</div>
     ),
   },
   {
     accessorKey: "date",
-    header: () => <div className="text-right">Date</div>,
+    header: () => <div>Date</div>,
     cell: ({ row }) => {
       // Parse the date string and format it to "MM/DD/YYYY"
       const formattedDate = new Date(row.getValue("date")).toLocaleDateString();
-      return <div className="text-right font-medium">{formattedDate}</div>;
+      return <div className="font-medium">{formattedDate}</div>;
+    },
+  },
+  {
+    accessorKey: "timeSlot",
+    header: () => <div>Time Slot</div>,
+    cell: ({ row }) => {
+      return <div className="capitalize">{row.getValue("timeSlot")}</div>;
     },
   },
 ];
