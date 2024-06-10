@@ -15,47 +15,62 @@ import { Calendar } from "@/components/ui/calendar";
 import { CalendarDays, Clock } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { formatDate } from "@/helper/formatDate";
 
-function BookAppointment({ doctor }: any) {
+// Define the BookAppointment component, accepting doctorId as a prop
+function BookAppointment({ doctorId = "66660ebf08a535d2143cf351" }: any) {
   const [date, setDate] = useState<Date>(new Date());
-  const [timeSlot, setTimeSlot] = useState<{ time: string }[]>();
+  const [timeSlot, setTimeSlot] = useState<string[]>();
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>();
   const [note, setNote] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
 
+  // Fetch available slots when the date changes
   useEffect(() => {
-    getTime();
-  }, []);
-
-  const getTime = () => {
-    const timeList = [];
-    for (let i = 10; i <= 12; i++) {
-      timeList.push({ time: i + ":00 AM" });
-      timeList.push({ time: i + ":30 AM" });
+    if (date != new Date()) {
+      fetchAvailableSlots();
     }
-    for (let i = 1; i <= 6; i++) {
-      timeList.push({ time: i + ":00 PM" });
-      timeList.push({ time: i + ":30 PM" });
-    }
+  }, [date]);
 
-    setTimeSlot(timeList);
+  // Function to fetch available slots for a specific date and doctor
+  const fetchAvailableSlots = async () => {
+    try {
+      const response = await axios.get("/api/doctors/available-slots", {
+        params: {
+          date: formatDate(date), // Format date to YYYY-MM-DD
+          doctorId,
+        },
+      });
+      setTimeSlot(response.data.slots);
+    } catch (error) {
+      console.error("Failed to fetch available slots", error);
+    }
   };
 
+  // Function to save the booking
   const saveBooking = async () => {
     try {
+      setLoading(true);
       const response = await axios.post("/api/appointments/book", {
         selectedTimeSlot,
         note,
-        date,
-        doctorId: "66487e5a2e3d7886b32244d2",
+        date: date.toISOString().split("T")[0], // Format date to YYYY-MM-DD
+        doctorId,
       });
-      toast.success("Appointment booked successfully!");
-    } catch (error) {
-      toast.error("Failed to book appointment.");
+      toast.success(response.data.message);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
+    } finally {
+      // Remove the selected time slot from available slots after booking
+      setTimeSlot(timeSlot?.filter((time) => time != selectedTimeSlot));
+      setLoading(false);
     }
   };
 
+  // Function to check if a given date is in the past
   const isPastDay = (day: Date) => {
-    return day <= new Date();
+    const today = new Date();
+    return day.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
   };
 
   return (
@@ -71,42 +86,67 @@ function BookAppointment({ doctor }: any) {
           <DialogDescription>
             <div>
               <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-2">
-                {/* Calendar */}
+                {/* Calendar section to select date */}
                 <div className="flex flex-col gap-3 items-baseline">
                   <h2 className="flex gap-2 items-center">
                     <CalendarDays className="text-primary h-5 w-5" />
                     Select Date
                   </h2>
-                  <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={(day) => day && setDate(day)}
-                    disabled={isPastDay}
-                    className="rounded-md border"
-                  />
-                </div>
-                {/* Time Slot */}
-                <div className="mt-3 md:mt-0">
-                  <h2 className="flex gap-2 items-center mb-3">
-                    <Clock className="text-primary h-5 w-5" />
-                    Select Time Slot
-                  </h2>
-                  <div className="grid grid-cols-3 gap-2 border rounded-lg p-5">
-                    {timeSlot?.map((item, index) => (
-                      <h2
-                        key={index}
-                        onClick={() => setSelectedTimeSlot(item.time)}
-                        className={`p-2 border cursor-pointer text-center hover:bg-primary hover:text-white rounded-full ${
-                          item.time == selectedTimeSlot &&
-                          "bg-primary text-white"
-                        }`}
-                      >
-                        {item.time}
-                      </h2>
-                    ))}
+
+                  <div className="flex flex-col gap-3 items-center w-full">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={(day) => day && setDate(day)}
+                      disabled={isPastDay}
+                      className="rounded-md border sm:w-auto"
+                    />
                   </div>
                 </div>
+                {/* Time Slot section to select available time slot */}
+                {!loading ? (
+                  <div className="mt-3 md:mt-0">
+                    <h2 className="flex gap-2 items-center mb-3">
+                      <Clock className="text-primary h-5 w-5" />
+                      Select Time Slot
+                    </h2>
+                    <div className="grid grid-cols-3 gap-2 border rounded-lg p-5">
+                      {timeSlot?.map((item, index) => (
+                        <h2
+                          key={index}
+                          onClick={() => setSelectedTimeSlot(item)}
+                          className={`p-2 border cursor-pointer text-center hover:bg-primary hover:text-white rounded-full ${
+                            item == selectedTimeSlot && "bg-primary text-white"
+                          }`}
+                        >
+                          {item}
+                        </h2>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-3 md:mt-0">
+                    <h2 className="flex gap-2 items-center mb-3">
+                      <Clock className="text-primary h-5 w-5" />
+                      Wait.....
+                    </h2>
+                    <div className="grid grid-cols-3 gap-2 border rounded-lg p-5">
+                      {timeSlot?.map((item, index) => (
+                        <h2
+                          key={index}
+                          onClick={() => setSelectedTimeSlot(item)}
+                          className={`p-2 border cursor-pointer text-center hover:bg-primary hover:text-white rounded-full ${
+                            item == selectedTimeSlot && "bg-primary text-white"
+                          }`}
+                        >
+                          {item}
+                        </h2>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
+              {/* Textarea to add a note for the appointment */}
               <Textarea
                 className="mt-3"
                 placeholder="Note"
@@ -126,7 +166,7 @@ function BookAppointment({ doctor }: any) {
               Close
             </Button>
           </DialogClose>
-          {/* Submit button */}
+          {/* Submit button to save the booking */}
           <Button
             type="button"
             disabled={!(date && selectedTimeSlot)}
