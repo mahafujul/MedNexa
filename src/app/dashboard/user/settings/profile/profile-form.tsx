@@ -54,7 +54,7 @@ export default function ProfileForm({ user }: any) {
   // Function to handle form submission
   async function onSubmit(data: ProfileFormValues) {
     try {
-      const response = await axios.post("/api/users/profile", { ...data });
+      const response = await axios.put("/api/users/profile", { ...data });
       // Display success message using toast notification
       toast(response.data.message, {
         action: {
