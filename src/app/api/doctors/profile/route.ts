@@ -149,9 +149,9 @@ export async function GET(request: NextRequest) {
 //Endpoint to update a Doctor's account
 export async function PUT(request: NextRequest) {
   try {
-    // Retrieve the doctorId from params
-    const pathname = request.nextUrl.pathname.split("/");
-    const doctorId = pathname[pathname.length - 1];
+    // Retrieve the userId from session
+    const session = await getServerSession(authOptions);
+    const doctorId = session?.user?.userId;
 
     //Retrive updated data from requestBody
     const reqBody = await request.json();
@@ -173,28 +173,8 @@ export async function PUT(request: NextRequest) {
       youtube,
     } = reqBody;
 
-    // Extract the token from the request cookies
-    const token = request.cookies.get("token");
-
-    // Check if token exists
-    if (!token) {
-      // Return a JSON response indicating token-related issue
-      return NextResponse.json({
-        message: "Token related issue",
-        success: false,
-      });
-    }
-
-    // Decode the token to get user information
-    const decodedToken = jwt.verify(
-      token?.value,
-      `${process.env.TOKEN_SECRET}`
-    ) as JwtPayload;
-    const { username, role } = decodedToken;
-
     // Find the doctor user by doctorId and update
     const doctor = await Doctor.findByIdAndUpdate(doctorId, {
-      username,
       password,
       firstName,
       lastName,
