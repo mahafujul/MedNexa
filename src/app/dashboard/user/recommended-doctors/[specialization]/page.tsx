@@ -151,8 +151,9 @@ export default function RecommendedDoctors() {
                       {doctor.specialization}
                     </h2>
                     <div className="flex gap-2">
-                      {doctor.degrees.map((degree: any) => (
+                      {doctor.degrees.map((degree: any, index: number) => (
                         <h2
+                          key={index}
                           className="text-[10px] bg-blue-100 p-1 rounded-full
                         px-2 text-primary"
                         >
