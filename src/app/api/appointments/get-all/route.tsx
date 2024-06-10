@@ -49,7 +49,7 @@ export async function GET() {
       {
         $project: {
           _id: "$appointmentDetails._id",
-          status: "$appointmentDetails.status",
+          timeSlot: "$appointmentDetails.selectedTimeSlot",
           completed: "$appointmentDetails.completed",
           doctorName: {
             $concat: [
