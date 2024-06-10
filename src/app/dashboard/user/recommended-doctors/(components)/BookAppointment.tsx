@@ -54,7 +54,7 @@ function BookAppointment({ doctorId = "66660ebf08a535d2143cf351" }: any) {
       const response = await axios.post("/api/appointments/book", {
         selectedTimeSlot,
         note,
-        date: date.toISOString().split("T")[0], // Format date to YYYY-MM-DD
+        date: formatDate(date), // Format date to YYYY-MM-DD
         doctorId,
       });
       toast.success(response.data.message);
