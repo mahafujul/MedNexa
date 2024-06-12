@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     const newUsername = `dr-${username}`;
 
     // Check if a user with the given username already exists
-    const userExists = await Doctor.findOne({ username });
+    const userExists = await Doctor.findOne({ username: newUsername });
     if (userExists) {
       return NextResponse.json(
         {
