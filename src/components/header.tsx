@@ -95,9 +95,14 @@ function Header() {
           ))}
         </ul>
       </div>
-      <Button asChild>
-        <Link href="/login_signup">Get Started</Link>
-      </Button>
+      <div className="flex gap-2">
+        <Button asChild className="hidden md:block">
+          <Link href="/doctor_registration">Dr. Registration</Link>
+        </Button>
+        <Button asChild>
+          <Link href="/login_signup">Get Started</Link>
+        </Button>
+      </div>
     </div>
   );
 }
