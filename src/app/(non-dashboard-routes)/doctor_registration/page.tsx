@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -43,6 +43,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { specializationCategoryList } from "@/data/categoryList";
 import axios from "axios";
 import { toast } from "sonner";
+
 
 // Define schema for form validation using zod
 const formSchema = z
@@ -99,6 +100,9 @@ const formSchema = z
 type Props = {};
 // Component for Doctor Registration
 function DoctorRegistration({}: Props) {
+  //State variable
+  const [usernameAvailable, setUsernameAvailable] = useState<boolean>(false);
+
   // Initialize the form with default values and validation schema
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -120,6 +124,31 @@ function DoctorRegistration({}: Props) {
       confirmPassword: "",
     },
   });
+
+  //Function to check whether a username availabe or not
+  async function usernameAvailabilityChecker(username: string) {
+    try {
+      //Send a GET request to the server with the username
+      const response = await axios.get(
+        "/api/doctors/check-username-availability",
+        {
+          params: {
+            username,
+          },
+        }
+      );
+      if (response.data.success) {
+        setUsernameAvailable(true);
+      }else{
+        setUsernameAvailable(false)
+      }
+      //Display success message using toast notification
+      toast(response.data.message);
+    } catch (err: any) {
+      //Display error message using toast notifications on username availability check failure
+      toast(err.response.message);
+    }
+  }
 
   // Function to handle form submission
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -145,7 +174,7 @@ function DoctorRegistration({}: Props) {
   }
 
   return (
-    <div className="p-10 lg:p-20">
+    <div className="p-5 lg:p-20">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -163,9 +192,21 @@ function DoctorRegistration({}: Props) {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Username</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter your username" {...field} />
-                      </FormControl>
+                      <div className="flex gap-2">
+                        <FormControl>
+                          <Input placeholder="Enter your username" {...field} />
+                        </FormControl>
+                        <Button 
+                          onClick={(e) => {
+                            e.preventDefault()
+                            usernameAvailabilityChecker(
+                              form.getValues("username")
+                            );
+                          }}
+                        >
+                          Check
+                        </Button>
+                      </div>
                       <FormDescription>
                         {`Your final username would be dr-${field.value}`}
                       </FormDescription>
@@ -511,9 +552,15 @@ function DoctorRegistration({}: Props) {
           </div>
           {/* Submit Button */}
           <div className="flex justify-end">
-            <Button className="text-right" type="submit">
-              Submit
-            </Button>
+            {!usernameAvailable ? (
+              <Button disabled className="text-right" type="submit">
+                Submit
+              </Button>
+            ) : (
+              <Button className="text-right" type="submit">
+                Submit
+              </Button>
+            )}
           </div>
         </form>
       </Form>
