@@ -40,7 +40,7 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { specializationCategoryList } from "@/data/categoryList";
+import { specializationCategoryList } from "@/data/specializationCategoryList";
 import axios from "axios";
 import { toast } from "sonner";
 
