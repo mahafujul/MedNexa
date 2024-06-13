@@ -16,9 +16,11 @@ import { CalendarDays, Clock } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { formatDate } from "@/helper/formatDate";
+import { filterOutPastSlots } from "@/helper/filterOutPastSlots";
 
 // Define the BookAppointment component, accepting doctorId as a prop
 function BookAppointment({ doctorId = "66660ebf08a535d2143cf351" }: any) {
+
   const [date, setDate] = useState<Date>(new Date());
   const [timeSlot, setTimeSlot] = useState<string[]>();
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>();
@@ -41,7 +43,8 @@ function BookAppointment({ doctorId = "66660ebf08a535d2143cf351" }: any) {
           doctorId,
         },
       });
-      setTimeSlot(response.data.slots);
+      //Filter out past time slots, Only add future time slots.
+      setTimeSlot(filterOutPastSlots(response.data.slots, date));
     } catch (error) {
       console.error("Failed to fetch available slots", error);
     }
