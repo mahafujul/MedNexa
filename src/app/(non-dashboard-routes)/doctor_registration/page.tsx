@@ -51,11 +51,11 @@ const formSchema = z
     username: z.string().min(2, {
       message: "Username must be at least 2 characters.",
     }),
-    firstName: z.string().min(2, {
-      message: "First Name must be at least 2 characters",
+    firstName: z.string().min(3, {
+      message: "First Name must be at least 3 characters",
     }),
-    lastName: z.string().min(2, {
-      message: "Last Name must be at least 2 characters",
+    lastName: z.string().min(3, {
+      message: "Last Name must be at least 3 characters",
     }),
     email: z
       .string({ required_error: "Please enter an email address." })
@@ -72,8 +72,8 @@ const formSchema = z
       .min(10, {
         message: "Bio must be at least 10 characters.",
       })
-      .max(160, {
-        message: "Bio must not be longer than 160 characters.",
+      .max(1000, {
+        message: "Bio must not be longer than 1000 characters.",
       }),
     url: z.string({ required_error: "Please paste your photo URL" }),
     address: z.string({ required_error: "Address of the clinic is required." }),
