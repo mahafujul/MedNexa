@@ -305,7 +305,7 @@ function SetAvailability({ doctorId }: any) {
           </CardHeader>
           <CardContent className="mt-5">
             <div className="flex flex-col gap-3">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 border rounded-lg p-5">
+              <div className="grid grid-cols-2 xl:grid-cols-3 gap-2 border rounded-lg p-5">
                 {generateTimeSlots.map((time, index) => (
                   <h2
                     key={index}
