@@ -1,6 +1,6 @@
 // Import necessary modules
 import bcrypt from "bcryptjs"; // Module for password hashing
-import { NextResponse, NextRequest } from "next/server"; // Next.js server-side request and response modules
+import { NextResponse, NextRequest } from "next/server"; 
 import { Doctor } from "@/models/doctorModel"; // Import Doctor model
 import { connect } from "@/config/dbConfig"; // Import database connection function
 
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
 
     // Return success response
     return NextResponse.json(
-      { message: "Doctor created successfully", success: true },
+      { message: "Your application is successfully submitted.", success: true },
       { status: 200 }
     );
   } catch (err: any) {
