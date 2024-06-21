@@ -81,9 +81,9 @@ const doctorSchema = new mongoose.Schema(
     numberOfFeedback: {
       type: Number,
     },
-    status: {
-      type: String,
-      default: "pending",
+    pending: {
+      type: Boolean,
+      default: true,
     },
     role: {
       type: String,
