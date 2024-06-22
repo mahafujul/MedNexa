@@ -36,14 +36,6 @@ const userSchema = new mongoose.Schema(
     allAppointments: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Appointment" }],
     },
-    seenNotifications: {
-      type: Array,
-      default: [],
-    },
-    unseenNotifications: {
-      type: Array,
-      default: [],
-    },
     feedbacks: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Feedback" }],
     },
