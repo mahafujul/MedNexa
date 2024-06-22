@@ -47,7 +47,7 @@ export type User = {
   name: string;
 };
 
-// Define table columns for appointments
+// Define table columns for users
 export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "username",
@@ -81,7 +81,7 @@ export const columns: ColumnDef<User>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const doctor = row.original;
+      const user = row.original;
 
       return (
         <DropdownMenu>
@@ -94,7 +94,7 @@ export const columns: ColumnDef<User>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(doctor._id)}
+              onClick={() => navigator.clipboard.writeText(user._id)}
             >
               Copy User ID
             </DropdownMenuItem>
@@ -110,6 +110,7 @@ type Props = {};
 
 // Main component for displaying all the users
 export default function AllUsers({}: Props) {
+  // State variables
   const [data, setData] = useState<User[]>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState([]);
@@ -117,11 +118,11 @@ export default function AllUsers({}: Props) {
   const [rowSelection, setRowSelection] = useState({});
 
   useEffect(() => {
-    fetchAllAppointments();
+    fetchAllUsers();
   }, []);
 
-  // Fetch all appointments from the API
-  async function fetchAllAppointments() {
+  // Fetch all users from the API
+  async function fetchAllUsers() {
     try {
       const response = await axios.get("/api/admin/users/get-all");
       setData(response?.data?.users || []);
