@@ -4,7 +4,7 @@ import React from "react";
 // Define the RecentAppointments component, accepting allAppointments as a prop
 export function RecentAppointments({ allAppointments }: any) {
   return (
-    <div className="space-y-8">
+    <div className="space-y-5">
       {allAppointments?.length > 1 ? (
         // Map through the last 4 appointments in reverse order
         allAppointments
@@ -35,11 +35,11 @@ export function RecentAppointments({ allAppointments }: any) {
                   {appointment.completed ? "Completed" : "Pending"}
                 </p>
               </div>
-              <div className="ml-auto font-medium">
+              <div className="ml-auto text-sm font-medium">
                 {/* Display the date of the appointment */}
                 {new Date(appointment.date).toLocaleDateString()}
               </div>
-              <div className="ml-auto font-medium">
+              <div className="ml-auto text-sm font-medium">
                 {/* Display the selected time slot of the appointment */}
                 {appointment.selectedTimeSlot}
               </div>
