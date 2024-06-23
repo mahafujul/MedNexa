@@ -35,7 +35,9 @@ const profileFormSchema = z.object({
     })
     .email({
       message: "Please enter a valid email address.",
-    }),
+    })
+    .optional(),
+  feePerConsultation: z.coerce.number().optional(),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -87,8 +89,29 @@ export default function ProfileForm({ user }: any) {
                 <Input disabled defaultValue={user?.username} {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You cannot change it once set.
+                This is your public display name. It cannot be changed once set.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Consulting Fees Field */}
+        <FormField
+          control={form.control}
+          name="feePerConsultation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Consulting Fees</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  defaultValue={user?.feePerConsultation}
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                Enter your fee per consultation. This value can be updated.
               </FormDescription>
               <FormMessage />
             </FormItem>
