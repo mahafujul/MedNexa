@@ -19,8 +19,7 @@ import { formatDate } from "@/helper/formatDate";
 import { filterOutPastSlots } from "@/helper/filterOutPastSlots";
 
 // Define the BookAppointment component, accepting doctorId as a prop
-function BookAppointment({ doctorId = "66660ebf08a535d2143cf351" }: any) {
-
+function BookAppointment({ doctorId }: any) {
   const [date, setDate] = useState<Date>(new Date());
   const [timeSlot, setTimeSlot] = useState<string[]>();
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>();

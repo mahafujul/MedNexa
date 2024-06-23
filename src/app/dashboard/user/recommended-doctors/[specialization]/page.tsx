@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import {
   IconAdjustmentsHorizontal,
   IconSortAscendingLetters,
@@ -15,30 +15,81 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-
+import { cities } from "@/data/cities_in_west_bengal";
 import { UserNav } from "@/components/user-nav";
-import { doctorList } from "@/data/doctor_list";
 import Image from "next/image";
 import BookAppointment from "../(components)/BookAppointment";
 import { GraduationCap, MapPin, IndianRupee } from "lucide-react";
+import axios from "axios";
+import { useParams } from "next/navigation";
+
+interface Doctor {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  url: string;
+  feePerConsultation: number;
+  experience: number;
+  specialization: string;
+  city: string;
+  degrees: string[];
+  name: string;
+}
+
 
 export default function RecommendedDoctors() {
-  const [sort, setSort] = useState("ascending");
-  const [location, setLocation] = useState("All");
-  const [searchTerm, setSearchTerm] = useState("");
+  // State variables for sorting, filtering, search term, loading state, and doctors list
+  const [sortOrder, setSortOrder] = useState<"ascending" | "descending">(
+    "ascending"
+  );
+  const [selectedLocation, setSelectedLocation] = useState<string>("All");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
 
-  const filteredDoctor = doctorList
-    .sort((a: any, b: any) =>
-      sort === "ascending"
+  // Retrieve specialization from URL parameters
+  const params = useParams();
+  const specialization = params.specialization;
+
+  // Fetch doctors of a particular specialization category
+  useEffect(() => {
+    (async function fetchDoctors() {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(`/api/doctors/get-a-specialist`, {
+          params: { specialization },
+        });
+        setDoctors(response.data.doctors);
+      } catch (error) {
+        console.error("Error fetching doctors data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, [specialization]);
+
+  // Filter and sort the doctors list
+  const filteredDoctors = doctors
+    .sort((a, b) =>
+      sortOrder === "ascending"
         ? a.name.localeCompare(b.name)
         : b.name.localeCompare(a.name)
     )
-    .filter((doctor: any) =>
-      location === "All" ? true : doctor.city === location
+    .filter((doctor) =>
+      selectedLocation === "All" ? true : doctor.city === selectedLocation
     )
-    .filter((doctor: any) =>
+    .filter((doctor) =>
       doctor.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+  // Display loading indicator while data is being fetched
+  if (isLoading) {
+    return (
+      <div className="flex justify-center h-screen items-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <Layout fadedBelow fixedHeight>
@@ -65,28 +116,40 @@ export default function RecommendedDoctors() {
         </div>
         <div className="my-4 flex items-end justify-between sm:my-0 sm:items-center">
           <div className="flex flex-col gap-4 sm:my-4 sm:flex-row">
+            {/* Search input for filtering doctors by name */}
             <Input
               placeholder="Search a doctor..."
               className="h-9 w-40 lg:w-[250px]"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setSearchTerm(e.target.value)
+              }
             />
-            <Select value={location} onValueChange={setLocation}>
+            {/* Dropdown for selecting location */}
+            <Select
+              value={selectedLocation}
+              onValueChange={setSelectedLocation}
+            >
               <SelectTrigger className="w-36">
                 <SelectValue>
-                  {location === "all" ? "All Locations" : location}
+                  {selectedLocation === "All"
+                    ? "All Locations"
+                    : selectedLocation}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="All">All Locations</SelectItem>
-                <SelectItem value="Kolkata">Kolkata</SelectItem>
-                <SelectItem value="Kalyani">Kalyani</SelectItem>
-                <SelectItem value="Berhampure">Berhampure</SelectItem>
+                {cities.map((city, index) => (
+                  <SelectItem key={index} value={city.name}>
+                    {city.name}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
 
-          <Select value={sort} onValueChange={setSort}>
+          {/* Dropdown for selecting sort order */}
+          <Select value={sortOrder} onValueChange={setSortOrder}>
             <SelectTrigger className="w-16">
               <SelectValue>
                 <IconAdjustmentsHorizontal size={18} />
@@ -109,10 +172,12 @@ export default function RecommendedDoctors() {
           </Select>
         </div>
         <Separator className="shadow" />
+
+        {/* List of filtered doctors */}
         <ul className="no-scrollbar grid gap-4 overflow-y-scroll pb-16 pt-4 md:grid-cols-2 lg:grid-cols-3">
-          {filteredDoctor.map((doctor: any) => (
+          {filteredDoctors.map((doctor) => (
             <li
-              key={doctor.id}
+              key={doctor._id}
               className="rounded-lg border p-2 sm:p-4 hover:shadow-md"
             >
               <div className="mb-3 flex items-center justify-between">
@@ -129,7 +194,7 @@ export default function RecommendedDoctors() {
                   <h2 className="mt-2 font-semibold">{doctor.name}</h2>
                   <h2 className="flex gap-2 text-gray-500 text-md">
                     <GraduationCap />
-                    <span>{doctor.Year_of_Experience} of Experience</span>
+                    <span>{doctor.experience} Years of Experience</span>
                   </h2>
                   <h2 className="text-md flex gap-2 text-gray-500">
                     <MapPin />
@@ -151,7 +216,7 @@ export default function RecommendedDoctors() {
                       {doctor.specialization}
                     </h2>
                     <div className="flex gap-2">
-                      {doctor.degrees.map((degree: any, index: number) => (
+                      {doctor.degrees.map((degree, index) => (
                         <h2
                           key={index}
                           className="text-[10px] bg-blue-100 p-1 rounded-full
@@ -164,7 +229,7 @@ export default function RecommendedDoctors() {
                   </div>
                 </div>
                 <div>
-                  <BookAppointment />
+                  <BookAppointment doctorId={doctor._id} />
                 </div>
               </div>
             </li>
