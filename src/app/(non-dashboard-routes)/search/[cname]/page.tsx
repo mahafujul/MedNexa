@@ -1,20 +1,40 @@
 "use client";
 import DoctorList from "@/components/doctor-list";
-// import GlobalApi from '@/app/_utils/GlobalApi'
 import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import axios from "axios";
+import { capitalizeFirstLetter } from "@/helper/capitalizeFirstLetter";
+interface Doctor {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  url: string;
+  feePerConsultation: number;
+  experience: number;
+  specialization: string;
+  city: string;
+  degrees: string[];
+  name: string;
+}
 
 function Search({ params }: any) {
-  //   const [doctorList,setDoctorList]=useState([]);
-  //   useEffect(()=>{
-  //     console.log(params.cname);
-  //     getDoctors();
-  //   },[])
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const param = useParams();
+  const specialization = param.cname;
 
-  //   const getDoctors=()=>{
-  //     GlobalApi.getDoctorByCategory(params.cname).then(resp=>{
-  //       setDoctorList(resp.data.data);
-  //     })
-  //   }
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await axios.get(`/api/doctors/get-a-specialist`, {
+          params: { specialization },
+        });
+        setDoctors(response.data.doctors);
+      } catch (error: any) {
+        console.error("Error fetching doctors data:", error);
+      }
+    })();
+  }, []);
+
   const doctorList = [
     {
       id: 1,
@@ -140,8 +160,8 @@ function Search({ params }: any) {
   return (
     <div className="mt-5">
       <DoctorList
-        heading={params.cname.replace(/%20/g, " ")}
-        doctorList={doctorList}
+        heading={capitalizeFirstLetter(params.cname.replace(/%20/g, " "))}
+        doctorList={doctors}
       />
     </div>
   );
