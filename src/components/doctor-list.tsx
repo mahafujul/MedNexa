@@ -25,7 +25,7 @@ function DoctorList({ doctorList, heading = "Popular Doctors" }: any) {
                   alt="doctor"
                   width={500}
                   height={200}
-                  className="h-[200px] w-full object-cover rounded-lg"
+                  className="h-[300px] w-full object-cover rounded-lg"
                 />
                 <div className="mt-3 items-baseline flex flex-col gap-1">
                   <h2
@@ -34,12 +34,10 @@ function DoctorList({ doctorList, heading = "Popular Doctors" }: any) {
                   >
                     {doctor.specialization}
                   </h2>
-                  <h2 className="font-bold">{doctor.Name}</h2>
-                  <h2 className="text-primary text-sm">
-                    {doctor.Year_of_Experience}
-                  </h2>
-                  <h2 className="text-gray-500 text-sm">{doctor.Address}</h2>
-                  <Link href={"/details/" + doctor?.id} className="w-full">
+                  <h2 className="font-bold">{doctor.name}</h2>
+                  <h2 className="text-primary text-sm">{`${doctor.experience} Years`}</h2>
+                  <h2 className="text-gray-500 text-sm">{doctor.city}</h2>
+                  <Link href={"/details/" + doctor?._id} className="w-full">
                     <h2
                       className="p-2 px-3 border-[1px] border-primary
                         text-primary rounded-full w-full text-center
