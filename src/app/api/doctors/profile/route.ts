@@ -81,6 +81,7 @@ export async function GET(request: NextRequest) {
           lastName: { $first: "$lastName" },
           phoneNumber: { $first: "$phoneNumber" },
           role: { $first: "$role" },
+          feePerConsultation: { $first: "$feePerConsultation" },
           feedbacks: { $first: "$feedbacks" },
           allAppointments: { $push: "$allAppointments" },
         },
@@ -95,6 +96,7 @@ export async function GET(request: NextRequest) {
           lastName: 1,
           phoneNumber: 1,
           role: 1,
+          feePerConsultation: 1,
           feedbacks: 1,
           allAppointments: 1,
           doctorName: {
@@ -155,42 +157,13 @@ export async function PUT(request: NextRequest) {
 
     //Retrive updated data from requestBody
     const reqBody = await request.json();
-    const {
-      password,
-      firstName,
-      lastName,
-      email,
-      about,
-      specialization,
-      phoneNumber,
-      address,
-      city,
-      experience,
-      feePerCunsultation,
-      facebook,
-      linkedin,
-      twitter,
-      youtube,
-    } = reqBody;
 
     // Find the doctor user by doctorId and update
-    const doctor = await Doctor.findByIdAndUpdate(doctorId, {
-      password,
-      firstName,
-      lastName,
-      email,
-      about,
-      specialization,
-      phoneNumber,
-      address,
-      city,
-      experience,
-      feePerCunsultation,
-      facebook,
-      linkedin,
-      twitter,
-      youtube,
-    });
+    const doctor = await Doctor.findByIdAndUpdate(
+      doctorId,
+      { ...reqBody },
+      { new: true }
+    );
 
     if (!doctor) {
       // Return a JSON response indicating no doctor found with the given doctor ID
