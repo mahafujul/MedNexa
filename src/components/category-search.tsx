@@ -9,74 +9,92 @@ import Link from "next/link";
 function CategorySearch() {
   const categoryList = [
     {
-      Name: "Dermatologist",
+      name: "Dermatologist",
+      value: "dermatologist",
       url: "/skin.png",
     },
     {
-      Name: "Allergist",
+      name: "Allergist",
+      value: "allergist",
       url: "/allergy.png",
     },
     {
-      Name: "Gastroenterologist",
+      name: "Gastroenterologist",
+      value: "gastroenterologist",
       url: "/Gastroenterologist.png",
     },
     {
-      Name: "Neurologist",
+      name: "Neurologist",
+      value: "neurologist",
       url: "/neurologist.png",
     },
     {
-      Name: "Cardiologist",
+      name: "Cardiologist",
+      value: "cardiologist",
       url: "/cardiologist.png",
     },
     {
-      Name: "Gynecologist",
+      name: "Gynecologist",
+      value: "gynecologist",
       url: "/gynecologist.png",
     },
     {
-      Name: "Pediatrician",
+      name: "Pediatrician",
+      value: "pediatrician",
       url: "/pediatrician.png",
     },
     {
-      Name: "Hepatologist",
+      name: "Hepatologist",
+      value: "hepatologist",
       url: "/hepatologist.png",
     },
     {
-      Name: "Osteopathic",
+      name: "Osteopathic",
+      value: "osteopathic",
       url: "/osteopathic_.png",
     },
     {
-      Name: "Endocrinologist",
+      name: "Endocrinologist",
+      value: "endocrinologist",
       url: "/endocrinologist.png",
     },
     {
-      Name: "Pulmonologist",
+      name: "Pulmonologist",
+      value: "pulmonologist",
       url: "/pulmonologist.png",
     },
     {
-      Name: "Internal Medicine",
+      name: "Internal Medicine",
+      value: "internal medicine",
       url: "/internal_medicine.png",
     },
     {
-      Name: "Common Cold",
+      name: "Common Cold",
+      value: "common cold",
       url: "/common_cold.png",
     },
     {
-      Name: "Phlebologist",
+      name: "Phlebologist",
+      value: "phlebologist",
       url: "/phlebologist.png",
     },
     {
-      Name: "Osteoarthritis",
+      name: "Osteoarthritis",
+      value: "osteoarthritis",
       url: "/osteoarthritis.png",
     },
     {
-      Name: "Rheumatologists",
+      name: "Rheumatologists",
+      value: "rheumatologists",
       url: "/rheumatologists.png",
     },
     {
-      Name: "Otolaryngologist",
+      name: "Otolaryngologist",
+      value: "otolaryngologist",
       url: "/otolaryngologist.png",
     },
   ];
+
   return (
     <div className="mb-10 items-center px-5 flex flex-col gap-3">
       <h2 className="font-bold text-4xl tracking-wide">
@@ -86,13 +104,13 @@ function CategorySearch() {
         Search Your Doctor and Book Appointment in one click
       </h2>
 
-      <div className="flex w-full mt-3 max-w-sm items-center space-x-2">
+      {/* <div className="flex w-full mt-3 max-w-sm items-center space-x-2">
         <Input type="text" placeholder="Search..." />
         <Button type="submit">
           <Search className="h-4 w-4 mr-2" />
           Search
         </Button>
-      </div>
+      </div> */}
 
       {/* Display List of Category  */}
       <div className="grid grid-cols-3 mt-5 md:grid-cols-4 lg:grid-cols-6 ">
@@ -101,7 +119,7 @@ function CategorySearch() {
               (item, index) =>
                 index < 6 && (
                   <Link
-                    href={"/search/" + item.Name}
+                    href={"/search/" + item.value}
                     key={index}
                     className="flex 
             flex-col text-center items-center
@@ -109,7 +127,7 @@ function CategorySearch() {
             gap-2 hover:scale-110 transition-all ease-in-out"
                   >
                     <Image src={item.url} alt="icon" width={40} height={40} />
-                    <label className="text-blue-600 text-sm">{item.Name}</label>
+                    <label className="text-blue-600 text-sm">{item.name}</label>
                   </Link>
                 )
             )
