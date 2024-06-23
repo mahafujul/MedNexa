@@ -11,71 +11,88 @@ function CategoryList() {
 
   const categoryList = [
     {
-      Name: "Dermatologist",
+      name: "Dermatologist",
+      value: "dermatologist",
       url: "/skin.png",
     },
     {
-      Name: "Allergist",
+      name: "Allergist",
+      value: "allergist",
       url: "/allergy.png",
     },
     {
-      Name: "Gastroenterologist",
+      name: "Gastroenterologist",
+      value: "gastroenterologist",
       url: "/Gastroenterologist.png",
     },
     {
-      Name: "Neurologist",
+      name: "Neurologist",
+      value: "neurologist",
       url: "/neurologist.png",
     },
     {
-      Name: "Cardiologist",
+      name: "Cardiologist",
+      value: "cardiologist",
       url: "/cardiologist.png",
     },
     {
-      Name: "Gynecologist",
+      name: "Gynecologist",
+      value: "gynecologist",
       url: "/gynecologist.png",
     },
     {
-      Name: "Pediatrician",
+      name: "Pediatrician",
+      value: "pediatrician",
       url: "/pediatrician.png",
     },
     {
-      Name: "Hepatologist",
+      name: "Hepatologist",
+      value: "hepatologist",
       url: "/hepatologist.png",
     },
     {
-      Name: "Osteopathic",
+      name: "Osteopathic",
+      value: "osteopathic",
       url: "/osteopathic_.png",
     },
     {
-      Name: "Endocrinologist",
+      name: "Endocrinologist",
+      value: "endocrinologist",
       url: "/endocrinologist.png",
     },
     {
-      Name: "Pulmonologist",
+      name: "Pulmonologist",
+      value: "pulmonologist",
       url: "/pulmonologist.png",
     },
     {
-      Name: "Internal Medicine",
+      name: "Internal Medicine",
+      value: "internal medicine",
       url: "/internal_medicine.png",
     },
     {
-      Name: "Common Cold",
+      name: "Common Cold",
+      value: "common cold",
       url: "/common_cold.png",
     },
     {
-      Name: "Phlebologist",
+      name: "Phlebologist",
+      value: "phlebologist",
       url: "/phlebologist.png",
     },
     {
-      Name: "Osteoarthritis",
+      name: "Osteoarthritis",
+      value: "osteoarthritis",
       url: "/osteoarthritis.png",
     },
     {
-      Name: "Rheumatologists",
+      name: "Rheumatologists",
+      value: "rheumatologists",
       url: "/rheumatologists.png",
     },
     {
-      Name: "Otolaryngologist",
+      name: "Otolaryngologist",
+      value: "otolaryngologist",
       url: "/otolaryngologist.png",
     },
   ];
@@ -86,17 +103,17 @@ function CategoryList() {
         {categoryList.map((item, index) => (
           <li key={index} className="cursor-pointer">
             <Link
-              href={"/search/" + item?.Name}
+              href={"/search/" + item?.value}
               className={`p-2 flex gap-2
                             text-[14px]
                             text-blue-600
                             items-center
                             rounded-md cursor-pointer w-full
-                            ${category == item.Name && "bg-blue-100"}
+                            ${category == item.value && "bg-blue-100"}
                             `}
             >
               <Image src={item?.url} alt="icon" width={25} height={25} />
-              <label className="cursor-pointer">{item?.Name}</label>
+              <label className="cursor-pointer">{item?.name}</label>
             </Link>
           </li>
         ))}
