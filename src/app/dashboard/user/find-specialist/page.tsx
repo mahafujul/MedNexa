@@ -38,7 +38,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-
+import axios from "axios";
+import { useRouter } from "next/navigation";
 // Importing icons
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 
@@ -82,6 +83,25 @@ export default function FindSpecialist({}: Props) {
 
   // Array of selected symptoms
   const selectedSymptoms = symptomStates.map((state) => state.value);
+
+  //router for page navigation
+  const router = useRouter();
+
+  //Handale submission
+  async function handleSubmission() {
+    try {
+      const response = await axios.get("/", {
+        data: {
+          selectedSymptoms,
+        },
+      });
+      router.push(
+        `/dashboard/user/recommended-doctors/${response.data}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // JSX return
   return (

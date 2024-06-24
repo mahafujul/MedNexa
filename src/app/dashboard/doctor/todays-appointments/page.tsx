@@ -262,7 +262,7 @@ export default function TodaysAppointments({}: Props) {
         <div className="w-full">
           <div className="flex items-center py-4">
             <Input
-              placeholder="Filter doctor names..."
+              placeholder="Search by patient..."
               value={
                 (table.getColumn("userName")?.getFilterValue() as string) ?? ""
               }

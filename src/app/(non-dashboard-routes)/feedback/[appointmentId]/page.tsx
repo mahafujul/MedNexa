@@ -36,7 +36,7 @@ const FeedbackPage = ({ params }: any) => {
     return (
       <div className="flex justify-center h-screen items-center">
         <h1 className="text-3xl font-semibold text-gray-700 mb-4">
-          Feedback Alraedy Given For The Appointment
+          Feedback Already Given For The Appointment
         </h1>
       </div>
     );

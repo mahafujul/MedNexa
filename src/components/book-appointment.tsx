@@ -189,7 +189,7 @@ function BookAppointment({ doctorId }: any) {
       onClick={() => router.push("/login_signup")}
       className="mt-3 rounded-full"
     >
-      Login as Doctor
+      Login as Patient
     </Button>
   );
 }

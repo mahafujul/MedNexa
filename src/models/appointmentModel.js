@@ -29,7 +29,7 @@ const appointmentSchema = new mongoose.Schema(
     },
     feedbackDone:{
       type: Boolean,
-      default: true
+      default: false
     },
     feedback: {
       type: mongoose.Schema.Types.ObjectId,
