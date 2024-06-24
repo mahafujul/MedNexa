@@ -7,6 +7,8 @@ import {connect} from '@/config/dbConfig'
 
 //Connet to the database
 connect();
+
+//Endpoint to login to admin dashboard
 export default async function POST(request: NextRequest){
     try {
         // Parse request body

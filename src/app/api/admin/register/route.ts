@@ -6,6 +6,8 @@ import {connect} from '@/config/dbConfig'
 
 //Connet to the database
 connect();
+
+//Endpoint to register admin user
 export async function POST(request: NextRequest){
     try{
         // Retrieve data from the request body

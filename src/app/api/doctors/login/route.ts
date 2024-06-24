@@ -8,7 +8,7 @@ import {connect} from '@/config/dbConfig'
 // Connect to the database
 connect();
 
-// Endpoint for user login
+// Endpoint for doctor login
 export async function POST(request: NextRequest) {
     try {
         // Parse request body

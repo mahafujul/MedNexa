@@ -1,45 +1,73 @@
 // Import necessary modules and dependencies
 import { NextResponse, NextRequest } from "next/server";
 import { Doctor } from "@/models/doctorModel"; // Import the Doctor model
-import jwt, { JwtPayload } from 'jsonwebtoken'; // Import JWT for token decoding
-import { connect } from '@/config/dbConfig'; // Import the database connection function
+import jwt, { JwtPayload } from "jsonwebtoken"; // Import JWT for token decoding
+import { connect } from "@/config/dbConfig"; // Import the database connection function
+import mongoose from "mongoose";
 
 // Connect to the database
 connect();
 
-// Endpoint to get details about a specific doctor
+// Endpoint to retrieve details of a specific doctor.
 export async function GET(request: NextRequest) {
-    try {
-        // Retrieve the doctorId from params
-        const pathname = request.nextUrl.pathname.split('/');
-        const doctorId = pathname[pathname.length - 1];
+  try {
+    const ObjectId = mongoose.Types.ObjectId;
+    const reqUrl = request.url;
+    const { searchParams } = new URL(reqUrl);
+    const doctorId = searchParams.get("doctorId")?.toString();
 
-        // Extract the token from the request cookies
-        const token = request.cookies.get("token");
-        
-        // Check if token exists
-        if (!token) {
-            // Return a JSON response indicating token-related issue
-            return NextResponse.json({ message: "Token related issue", success: false });
-        }
-        
-        // Decode the token to get user information
-        const decodedToken = jwt.verify(token?.value, `${process.env.TOKEN_SECRET}`) as JwtPayload;
-        const { username, role } = decodedToken;
+    // Aggregate query to fetch specific fields of the doctor
+    const doctor = await Doctor.aggregate([
+      {
+        $match: {
+          _id: new ObjectId(doctorId),
+        },
+      },
+      {
+        $project: {
+          // Specify fields to include in the response
+          username: 1,
+          firstName: 1,
+          lastName: 1,
+          name: {
+            $concat: ["Dr. ", "$firstName", " ", "$lastName"],
+          },
+          url: 1,
+          email: 1,
+          phoneNumber: 1,
+          about: 1,
+          specialization: 1,
+          degrees: 1,
+          address: 1,
+          city: 1,
+          experience: 1,
+          feePerConsultation: 1,
+        },
+      },
+    ]);
 
-        // Find the doctor user by doctorId
-        const doctor = await Doctor.findOne({ _id: doctorId })
-
-        if(!doctor){
-            // Return a JSON response indicating no doctor found with the given doctor ID
-            return NextResponse.json({ message: "No doctor found with the given doctor ID", success: false }, { status: 404 });
-        }
-        
-        // Return the package details as JSON response
-        return NextResponse.json({ message: "Doctor details successfully fetched", doctor, success: true }, { status: 200 });
-
-    } catch (err: any) {
-        // Return a JSON response for internal server error
-        return NextResponse.json({ message: err.message, success: false }, { status: 500 });
+    // Handle case where no doctor is found with the given ID
+    if (!doctor.length) {
+      return NextResponse.json(
+        { message: "Doctor not found", success: false },
+        { status: 404 } // Not Found status code
+      );
     }
+
+    // Return successful response with doctor details
+    return NextResponse.json(
+      {
+        message: "Doctor details retrieved successfully",
+        doctor: doctor[0],
+        success: true,
+      },
+      { status: 200 } // OK status code
+    );
+  } catch (err: any) {
+    // Return a JSON response for internal server error with a status code (500)
+    return NextResponse.json(
+      { message: "Internal Server Error", success: false, error: err.message },
+      { status: 500 } // Internal Server Error status code
+    );
+  }
 }

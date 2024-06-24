@@ -48,6 +48,7 @@ import {
 } from "@/components/ui/table";
 import axios from "axios";
 import { toast } from "sonner";
+import ClipLoader from "react-spinners/ClipLoader";
 
 // Define the Appointment type
 export type Appointment = {
@@ -268,7 +269,7 @@ export default function AllAppointments({}: Props) {
   if (loading) {
     return (
       <div className="flex justify-center h-screen items-center">
-        <p>Loading...</p>
+        <ClipLoader color="#0D7DFF" speedMultiplier={1} />
       </div>
     );
   }

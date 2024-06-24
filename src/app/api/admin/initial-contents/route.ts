@@ -7,6 +7,7 @@ import { connect } from "@/config/dbConfig";
 // Connect to the database
 connect();
 
+//Endpoint to retrive initial content of admin dashboard
 export async function GET(request: NextRequest) {
   try {
     // Check total numbers of users

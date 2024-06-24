@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const feedbackSchema = mongoose.model({
+const feedbackSchema = new mongoose.Schema({
   patient: {
     type: String,
     default: "The patient gave no feedback.",

@@ -175,7 +175,7 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Profine successfully updated.",
+        message: "Profile successfully updated.",
         updatedDoctor: doctor,
         success: true,
       },
