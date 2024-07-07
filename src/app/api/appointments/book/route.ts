@@ -6,6 +6,7 @@ import { User } from "@/models/userModel"; // Import the User model
 import { Doctor } from "@/models/doctorModel";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options"; // Import NextAuth options
 import { getServerSession } from "next-auth/next"; // Import the getServerSession function from NextAuth
+import { sendAppointmentConfirmationEmail } from "@/helper/email";
 
 // Connect to the database
 connect();
@@ -84,6 +85,15 @@ export async function POST(request: NextRequest) {
 
     // Save the doctor after adding the _id of the appointment and updating doctor's available slots
     await doctor.save();
+
+    // Send appointment confirmation email
+    await sendAppointmentConfirmationEmail(user.email, {
+      doctorName: `${doctor.firstName} ${doctor.lastName}`,
+      date,
+      selectedTimeSlot,
+      address: doctor.address,
+      contact: doctor.phoneNumber,
+    });
 
     // Respond with a success message
     return NextResponse.json(
