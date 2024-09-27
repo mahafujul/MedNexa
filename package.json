@@ -5,11 +5,17 @@
   "scripts": {
     "dev": "next dev -p 3000 -H 0.0.0.0",
     "build": "next build",
+    "postinstall": "prisma generate",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
+    "@next-auth/prisma-adapter": "^1.0.7",
+    "@prisma/adapter-pg": "^5.20.0",
+    "@prisma/client": "^5.20.0",
+    "@prisma/extension-accelerate": "^1.2.0",
+    "@prisma/extension-optimize": "^1.0.1",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -26,7 +32,12 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@tabler/icons-react": "^3.4.0",
+    "@tanstack/react-query": "5.56.2",
     "@tanstack/react-table": "^8.17.3",
+    "@trpc/client": "next",
+    "@trpc/next": "next",
+    "@trpc/react-query": "next",
+    "@trpc/server": "next",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.6",
     "axios": "^1.6.8",
@@ -38,28 +49,39 @@
     "dayjs": "^1.11.11",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.378.0",
-    "mongoose": "^8.3.2",
     "next": "14.2.2",
     "next-auth": "^4.24.7",
     "next-themes": "^0.3.0",
+    "pg": "^8.13.0",
     "react": "^18",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",
+    "react-markdown": "9.0.1",
     "recharts": "^2.12.7",
     "sonner": "^1.4.41",
+    "superjson": "1.13.3",
+    "supports-color": "9.4.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.23.8"
+    "zod": "3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^22.7.3",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.2",
     "postcss": "^8",
+    "prisma": "^5.20.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "ts-node": "10.9.2",
+    "typescript": "5.6.2"
+  },
+  "ct3aMetadata": {
+    "initVersion": "7.3.2"
+  },
+  "prisma": {
+    "seed": "ts-node ./prisma/seed.ts"
   }
 }

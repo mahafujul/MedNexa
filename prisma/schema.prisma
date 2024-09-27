@@ -1,0 +1,139 @@
+// schema.prisma
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters", "tracing"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String   @db.VarChar(255)
+  content   String?
+  published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+model Profile {
+  id     Int     @id @default(autoincrement())
+  bio    String?
+  user   User    @relation(fields: [userId], references: [id])
+  userId Int     @unique
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  posts   Post[]
+  profile Profile?
+}
+
+model Admin {
+  id                        Int      @id @default(autoincrement())
+  firstName                 String
+  lastName                  String
+  username                  String
+  email                     String   @unique
+  password                  String
+  role                      String   @default("ADMIN")
+  forgotPasswordToken       String?
+  forgotPasswordTokenExpiry DateTime?
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+}
+
+model Patient {
+  id                    Int        @id @default(autoincrement())
+  username              String
+  email                 String     @unique
+  firstName             String
+  lastName              String
+  dob                   DateTime?
+  mobileNumber          String
+  password              String
+  role                  String     @default("PATIENT")
+  allAppointments       Appointment[]
+  seenNotifications     String[]
+  unseenNotifications   String[]
+  feedbacks             Feedback[]
+  forgotPasswordToken   String?
+  forgotPasswordTokenExpiry DateTime?
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+}
+
+model Doctor {
+  id                  Int        @id @default(autoincrement())
+  username            String
+  firstName           String
+  lastName            String
+  about               String
+  email               String     @unique
+  degrees             String[]
+  password            String
+  url                 String
+  phoneNumber         String
+  website             String?
+  facebook            String?
+  linkedin            String?
+  twitter             String?
+  youtube             String?
+  address             String
+  city                String
+  specialization      String
+  experience          String
+  feePerConsultation   Float
+  availableSlots      Json
+  popular             Boolean    @default(false)
+  numberOfFeedback    Int?
+  status              String     @default("pending")
+  role                String     @default("DOCTOR")
+  
+ // Relationships 
+ allAppointments     Appointment[]
+ sumOfRatings        Float      @default(0)
+ feedbacks           Feedback[]
+ forgotPasswordToken   String?
+ forgotPasswordTokenExpiry DateTime?
+ createdAt           DateTime   @default(now())
+ updatedAt           DateTime   @updatedAt
+}
+
+model Appointment {
+    id               Int      @id @default(autoincrement())
+    doctorInfoId    Int      
+    doctorInfo      Doctor   @relation(fields: [doctorInfoId], references: [id])
+    patientInfoId   Int      
+    patientInfo     Patient   @relation(fields: [patientInfoId], references: [id])
+    date             DateTime 
+    selectedTimeSlot String    
+    note             String?   
+    completed        Boolean   @default(false)
+    feedbackId       Int?     
+    feedback         Feedback? @relation(fields: [feedbackId], references: [id])
+    createdAt        DateTime   @default(now())
+    updatedAt        DateTime   @updatedAt 
+}
+
+model Feedback {
+    id               Int      @id @default(autoincrement())
+    date             DateTime   @default(now())
+    
+ // Relationships 
+ doctorInfo       Doctor?     @relation(fields: [doctorInfoId], references: [id])
+ doctorInfoId     Int        
+ patientInfo      Patient?    @relation(fields: [patientInfoId], references: [id])
+ patientInfoId    Int        
+ rating           Float
+
+ // Optional relationship to Appointment if needed 
+ Appointment      Appointment[] 
+}
